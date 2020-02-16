@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <header>
-      <router-link to="/login">Login</router-link>
-      <router-link to="/signup">Signup</router-link>
-    </header>
+    <app-header></app-header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import AppHeader from '@/components/common/AppHeader.vue';
+
 export default {
   name: 'App',
+  components: {
+    AppHeader,
+  },
 };
 </script>
 
