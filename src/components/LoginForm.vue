@@ -1,16 +1,22 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div>
-      <label for="username">id: </label>
-      <input id="username" type="text" v-model.trim="username" />
+  <div class="contents">
+    <div class="form-wrapper form-wrapper-sm">
+      <form @submit.prevent="submitForm" class="form">
+        <div>
+          <label for="username">id: </label>
+          <input id="username" type="text" v-model.trim="username" />
+        </div>
+        <div>
+          <label for="password">pw: </label>
+          <input id="password" type="password" v-model.trim="password" />
+        </div>
+        <button type="submit" class="btn" :disabled="!isFormValid">
+          로그인
+        </button>
+      </form>
+      <p class="log">{{ message }}</p>
     </div>
-    <div>
-      <label for="password">pw: </label>
-      <input id="password" type="password" v-model.trim="password" />
-    </div>
-    <button type="submit" :disabled="!isFormValid">로그인</button>
-    <p>{{ message }}</p>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -40,7 +46,6 @@ export default {
 
       loginUser(userData)
         .then(({ data }) => {
-          console.log(JSON.stringify(data));
           this.message = `${data.user.username}님, 환영합니다!`;
           this.resetForm();
         })
