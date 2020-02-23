@@ -6,14 +6,33 @@
       </router-link>
     </div>
     <div class="navigations">
-      <router-link to="/login">로그인</router-link>
-      <router-link to="/signup">회원가입</router-link>
+      <template v-if="isLogined">
+        <span class="color-white">{{ username }}</span>
+        <a @click.prevent="logoutUser">Logout</a>
+      </template>
+      <template v-else>
+        <router-link to="/login">로그인</router-link>
+        <router-link to="/signup">회원가입</router-link>
+      </template>
     </div>
   </header>
 </template>
 
 <script>
-export default {};
+import { mapState, mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['username']),
+    ...mapGetters(['isLogined']),
+  },
+  methods: {
+    logoutUser() {
+      this.$store.commit('clearUsername');
+      this.$router.push('/');
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -35,6 +54,10 @@ a.logo {
   font-weight: 900;
   color: white;
 }
+a.router-link-exact-active {
+  color: white;
+  font-weight: bold;
+}
 .logo > span {
   font-size: 14px;
   font-weight: normal;
@@ -47,8 +70,7 @@ a.logo {
   top: 0;
   width: 100%;
 }
-a.router-link-exact-active {
+.color-white {
   color: white;
-  font-weight: bold;
 }
 </style>

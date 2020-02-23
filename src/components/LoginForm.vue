@@ -46,8 +46,9 @@ export default {
 
       loginUser(userData)
         .then(({ data }) => {
-          this.message = `${data.user.username}님, 환영합니다!`;
-          this.resetForm();
+          // 메인페이지로 이동
+          this.$store.commit('setUsername', data.user.username);
+          this.$router.push('/main');
         })
         .catch(({ response }) => {
           this.message = `로그인에 실패하였습니다. ${response.data}`;
