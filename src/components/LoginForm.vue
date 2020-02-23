@@ -2,23 +2,19 @@
   <form @submit.prevent="submitForm">
     <div>
       <label for="username">id: </label>
-      <input id="username" type="text" v-model="username" />
+      <input id="username" type="text" v-model.trim="username" />
     </div>
     <div>
       <label for="password">pw: </label>
-      <input id="password" type="password" v-model="password" />
+      <input id="password" type="password" v-model.trim="password" />
     </div>
-    <div>
-      <label for="nickname">nickname: </label>
-      <input id="nickname" type="text" v-model="nickname" />
-    </div>
-    <button type="submit">회원가입</button>
+    <button type="submit" :disabled="!isFormValid">로그인</button>
     <p>{{ message }}</p>
   </form>
 </template>
 
 <script>
-import { registerUser } from '@/api';
+import { loginUser } from '@/api';
 
 export default {
   data() {
@@ -26,33 +22,36 @@ export default {
       // form values
       username: '',
       password: '',
-      nickname: '',
       // log message
       message: '',
     };
+  },
+  computed: {
+    isFormValid() {
+      return this.username !== '' && this.password !== '';
+    },
   },
   methods: {
     submitForm() {
       const userData = {
         username: this.username,
         password: this.password,
-        nickname: this.nickname,
       };
 
-      registerUser(userData)
+      loginUser(userData)
         .then(({ data }) => {
-          console.log(data);
-          this.message = `${data.username} 님이 가입되었습니다.`;
+          console.log(JSON.stringify(data));
+          this.message = `${data.user.username}님, 환영합니다!`;
           this.resetForm();
         })
         .catch(({ response }) => {
-          this.message = `회원가입에 실패하였습니다. ${response.data.errmsg}`;
+          this.message = `로그인에 실패하였습니다. ${response.data}`;
         });
     },
+
     resetForm() {
       this.username = '';
       this.password = '';
-      this.nickname = '';
     },
   },
 };
