@@ -47,6 +47,7 @@ export default {
       loginUser(userData)
         .then(({ data }) => {
           // 메인페이지로 이동
+          this.$store.commit('setToken', data.token);
           this.$store.commit('setUsername', data.user.username);
           this.$router.push('/main');
         })
