@@ -3,12 +3,12 @@
     <div>
       <router-link to="/" class="logo">
         TIL
+        <span v-if="isLogined">by {{ username }}</span>
       </router-link>
     </div>
     <div class="navigations">
       <template v-if="isLogined">
-        <span class="color-white">{{ username }}</span>
-        <a @click.prevent="logoutUser">Logout</a>
+        <a class="logout-button" @click.prevent="logoutUser">Logout</a>
       </template>
       <template v-else>
         <router-link to="/login">로그인</router-link>
@@ -54,10 +54,6 @@ a.logo {
   font-weight: 900;
   color: white;
 }
-a.router-link-exact-active {
-  color: white;
-  font-weight: bold;
-}
 .logo > span {
   font-size: 14px;
   font-weight: normal;
@@ -70,7 +66,11 @@ a.router-link-exact-active {
   top: 0;
   width: 100%;
 }
-.color-white {
+.logout-button {
+  font-size: 14px;
+}
+a.router-link-exact-active {
   color: white;
+  font-weight: bold;
 }
 </style>
