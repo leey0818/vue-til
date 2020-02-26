@@ -11,6 +11,9 @@
         ></post-list-item>
       </ul>
     </div>
+    <router-link to="/add" class="create-button">
+      <i class="fas fa-plus"></i>
+    </router-link>
   </div>
 </template>
 

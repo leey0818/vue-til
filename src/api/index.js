@@ -28,8 +28,15 @@ const loginUser = userData => {
   return instance.post('/login', userData);
 };
 
+/**
+ * 학습노트 데이터 조회 API
+ */
 const fetchPosts = () => {
   return instance.get('/posts');
 };
 
-export { registerUser, loginUser, fetchPosts };
+const createPost = postData => {
+  return instance.post('/posts', postData);
+};
+
+export { registerUser, loginUser, fetchPosts, createPost };
