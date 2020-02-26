@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import { loginUser } from '@/api';
-
 export default {
   data() {
     return {
@@ -38,24 +36,19 @@ export default {
     },
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       const userData = {
         username: this.username,
         password: this.password,
       };
 
-      loginUser(userData)
-        .then(({ data }) => {
-          // 메인페이지로 이동
-          this.$store.commit('setToken', data.token);
-          this.$store.commit('setUsername', data.user.username);
-          this.$router.push('/main');
-        })
-        .catch(({ response }) => {
-          this.message = `로그인에 실패하였습니다. ${response.data}`;
-        });
+      try {
+        await this.$store.dispatch('LOGIN', userData);
+        this.$router.push('/main');
+      } catch (error) {
+        this.message = `로그인에 실패하였습니다. ${error.response.data}`;
+      }
     },
-
     resetForm() {
       this.username = '';
       this.password = '';

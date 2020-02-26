@@ -36,22 +36,21 @@ export default {
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       const userData = {
         username: this.username,
         password: this.password,
         nickname: this.nickname,
       };
 
-      registerUser(userData)
-        .then(({ data }) => {
-          console.log(data);
-          this.message = `${data.username} 님이 가입되었습니다.`;
-          this.resetForm();
-        })
-        .catch(({ response }) => {
-          this.message = `회원가입에 실패하였습니다. ${response.data.errmsg}`;
-        });
+      try {
+        const { data } = await registerUser(userData);
+
+        this.message = `${data.username} 님이 가입되었습니다.`;
+        this.resetForm();
+      } catch (error) {
+        this.message = `회원가입에 실패하였습니다. ${error.response.data.errmsg}`;
+      }
     },
     resetForm() {
       this.username = '';
