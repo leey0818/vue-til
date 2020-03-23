@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { createPost } from '@/api';
+import { createPost } from '@/api/posts.api';
 
 export default {
   data() {

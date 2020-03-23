@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { loginUser } from '@/api';
+import { loginUser } from '@/api/users.api';
 import { saveAuth, saveUser, getAuth, getUser } from '@/utils/storage';
 
 Vue.use(Vuex);

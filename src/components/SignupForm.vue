@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { registerUser } from '@/api';
+import { createUser } from '@/api/users.api';
 
 export default {
   data() {
@@ -44,7 +44,7 @@ export default {
       };
 
       try {
-        const { data } = await registerUser(userData);
+        const { data } = await createUser(userData);
 
         this.message = `${data.username} 님이 가입되었습니다.`;
         this.resetForm();

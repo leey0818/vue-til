@@ -46,7 +46,9 @@ export default {
         await this.$store.dispatch('LOGIN', userData);
         this.$router.push('/main');
       } catch (error) {
-        this.message = `로그인에 실패하였습니다. ${error.response.data}`;
+        this.message = `로그인에 실패하였습니다. ${
+          error.response ? error.response.data : error.message
+        }`;
       }
     },
     resetForm() {
