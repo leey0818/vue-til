@@ -10,11 +10,19 @@ const fetchPosts = () => {
 };
 
 /**
- * 학습노드 데이터 추가 API
- * @param {object} postData 학습노드 데이터
+ * 학습노트 데이터 추가 API
+ * @param {object} postData 학습노트 데이터
  */
 const createPost = postData => {
   return httpAuthClient.post(END_POINT, postData);
 };
 
-export { fetchPosts, createPost };
+/**
+ * 학습노트 데이터 삭제 API
+ * @param {string} id 학습노트 id
+ */
+const deletePost = id => {
+  return httpAuthClient.delete(`${END_POINT}/${id}`);
+};
+
+export { fetchPosts, createPost, deletePost };
