@@ -7,7 +7,7 @@
       {{ item.contents }}
     </div>
     <div class="post-time">
-      {{ item.createdAt }}
+      {{ item.createdAt | datetime }}
       <span class="icon" @click="editItem"><i class="fa fa-edit"></i></span>
       <span class="icon" @click="deleteItem"><i class="fa fa-trash"></i></span>
     </div>
@@ -15,12 +15,17 @@
 </template>
 
 <script>
+import { datetime } from '@/utils/filters';
+
 export default {
   props: {
     item: {
       type: Object,
       required: true,
     },
+  },
+  filters: {
+    datetime,
   },
   methods: {
     deleteItem() {
