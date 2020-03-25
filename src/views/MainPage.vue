@@ -8,6 +8,7 @@
           v-for="postItem in postItems"
           :key="postItem._id"
           :item="postItem"
+          @delete="deleteItem"
         ></post-list-item>
       </ul>
     </div>
@@ -20,7 +21,7 @@
 <script>
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import PostListItem from '@/components/posts/PostListItem.vue';
-import { fetchPosts } from '@/api/posts.api';
+import { fetchPosts, deletePost } from '@/api/posts.api';
 
 export default {
   components: {
@@ -40,6 +41,20 @@ export default {
       const { data } = await fetchPosts();
       this.postItems = data.posts;
       this.isLoading = false;
+    },
+    async deleteItem(_id) {
+      if (confirm('Do you want to delete this post?')) {
+        try {
+          // 삭제
+          await deletePost(_id);
+        } catch (err) {
+          alert(`삭제 오류: ${err.response ? err.response.data : err.message}`);
+          return;
+        }
+
+        // 삭제 후 새로고침
+        this.fetchData();
+      }
     },
   },
   created() {
