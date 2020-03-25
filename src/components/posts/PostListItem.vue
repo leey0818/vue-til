@@ -8,7 +8,7 @@
     </div>
     <div class="post-time">
       {{ item.createdAt }}
-      <span class="icon"><i class="fa fa-edit"></i></span>
+      <span class="icon" @click="editItem"><i class="fa fa-edit"></i></span>
       <span class="icon" @click="deleteItem"><i class="fa fa-trash"></i></span>
     </div>
   </li>
@@ -25,6 +25,9 @@ export default {
   methods: {
     deleteItem() {
       this.$emit('delete', this.item._id);
+    },
+    editItem() {
+      this.$router.push(`/post/${this.item._id}`);
     },
   },
 };

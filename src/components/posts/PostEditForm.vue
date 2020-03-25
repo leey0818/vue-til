@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h1 class="page-header">Create Post</h1>
+    <h1 class="page-header">Edit Post</h1>
     <div class="form-wrapper">
       <form class="form" @submit.prevent="submitForm">
         <div>
@@ -14,7 +14,7 @@
             Content length must be less than 200
           </p>
         </div>
-        <button type="submit" class="btn">Create</button>
+        <button type="submit" class="btn">Edit</button>
       </form>
       <p class="log">{{ message }}</p>
     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { createPost } from '@/api/posts.api';
+import { fetchPost, updatePost } from '@/api/posts.api';
 import bus from '@/utils/bus';
 
 export default {
@@ -40,22 +40,28 @@ export default {
   },
   methods: {
     async submitForm() {
-      const postData = {
-        title: this.title,
-        contents: this.content,
-      };
+      const id = this.$route.params.id;
 
       try {
-        // 게시물 등록
-        await createPost(postData);
+        await updatePost(id, {
+          title: this.title,
+          contents: this.content,
+        });
 
-        // 메인페이지로 이동
-        bus.$emit('show:toast', '게시물이 등록되었습니다.');
+        bus.$emit('show:toast', '게시물이 수정되었습니다.');
         this.$router.push('/main');
-      } catch (error) {
-        this.message = `게시물을 등록할 수 없습니다. ${error.response.data.message}`;
+      } catch (err) {
+        this.message = `수정 중 오류가 발생하였습니다. ${
+          err.response ? err.response.data : err.message
+        }`;
       }
     },
+  },
+  async created() {
+    const id = this.$route.params.id;
+    const { data } = await fetchPost(id);
+    this.title = data.title;
+    this.content = data.contents;
   },
 };
 </script>
