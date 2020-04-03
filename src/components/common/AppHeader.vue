@@ -1,9 +1,9 @@
 <template>
   <header>
     <div>
-      <router-link to="/" class="logo">
+      <router-link :to="logoLink" class="logo">
         TIL
-        <span v-if="isLogined">by {{ username }}</span>
+        <span v-if="isLogined">by {{ $store.state.username }}</span>
       </router-link>
     </div>
     <div class="navigations">
@@ -19,16 +19,20 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-
 export default {
   computed: {
-    ...mapState(['username']),
-    ...mapGetters(['isLogined']),
+    isLogined() {
+      return this.$store.getters.isLogined;
+    },
+
+    logoLink() {
+      return this.isLogined ? '/main' : '/login';
+    },
   },
   methods: {
     logoutUser() {
       this.$store.commit('clearUsername');
+      this.$store.commit('clearToken');
       this.$router.push('/');
     },
   },

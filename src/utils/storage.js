@@ -1,17 +1,13 @@
-const saveAuth = token => {
-  localStorage.setItem('til_auth', token);
+const getItem = key => {
+  return localStorage.getItem(key);
 };
 
-const getAuth = () => {
-  return localStorage.getItem('til_auth');
+const setItem = (key, value) => {
+  localStorage.setItem(key, value);
 };
 
-const saveUser = name => {
-  localStorage.setItem('til_user', name);
+const removeItem = key => {
+  localStorage.removeItem(key);
 };
 
-const getUser = () => {
-  return localStorage.getItem('til_user');
-};
-
-export { saveAuth, saveUser, getAuth, getUser };
+export { getItem, setItem, removeItem };
