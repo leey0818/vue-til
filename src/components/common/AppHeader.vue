@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { CLEAR_TOKEN, CLEAR_USERNAME } from '@/store/mutation-types';
+
 export default {
   computed: {
     isLogined() {
@@ -31,8 +33,8 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.commit('clearUsername');
-      this.$store.commit('clearToken');
+      this.$store.commit(CLEAR_TOKEN);
+      this.$store.commit(CLEAR_USERNAME);
       this.$router.push('/');
     },
   },

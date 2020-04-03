@@ -7,6 +7,12 @@ import {
   removeAuthToken,
   decodeAuthToken,
 } from '@/utils/auth';
+import {
+  SET_TOKEN,
+  CLEAR_TOKEN,
+  SET_USERNAME,
+  CLEAR_USERNAME,
+} from './mutation-types';
 
 Vue.use(Vuex);
 
@@ -21,27 +27,32 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    setToken(state, token) {
+    // 사용자이름 설정/삭제
+    [SET_USERNAME](state, username) {
+      state.username = username;
+    },
+    [CLEAR_USERNAME](state) {
+      state.username = '';
+    },
+
+    // 인증토큰 설정/삭제
+    [SET_TOKEN](state, token) {
       state.token = token;
     },
-    clearToken(state) {
+    [CLEAR_TOKEN](state) {
       state.token = '';
       removeAuthToken();
     },
-    setUsername(state, username) {
-      state.username = username;
-    },
-    clearUsername(state) {
-      state.username = '';
-    },
   },
   actions: {
-    async LOGIN({ commit }, userData) {
-      const { data } = await loginUser(userData);
-      commit('setToken', data.token);
-      commit('setUsername', data.user.username);
+    async loginUser({ commit }, { username, password }) {
+      const { data } = await loginUser({ username, password });
 
-      // 인증토큰 저장
+      // 상태 변경
+      commit(SET_TOKEN, data.token);
+      commit(SET_USERNAME, data.user.username);
+
+      // 로컬저장소에 인증토큰 저장
       setAuthToken(data.token);
 
       return data;

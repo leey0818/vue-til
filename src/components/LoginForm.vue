@@ -43,7 +43,7 @@ export default {
       };
 
       try {
-        await this.$store.dispatch('LOGIN', userData);
+        await this.$store.dispatch('loginUser', userData);
         this.$router.push('/main');
       } catch (error) {
         this.message = `로그인에 실패하였습니다. ${
