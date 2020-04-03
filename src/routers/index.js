@@ -1,7 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
+
+const checkAuthBeforeEnter = (to, from, next) => {
+  if (!store.getters.isLogined) {
+    next('/login');
+  } else {
+    next();
+  }
+};
 
 const router = new VueRouter({
   mode: 'history',
@@ -21,14 +30,17 @@ const router = new VueRouter({
     {
       path: '/main',
       component: () => import('@/views/MainPage.vue'),
+      beforeEnter: checkAuthBeforeEnter,
     },
     {
       path: '/add',
       component: () => import('@/views/PostAddPage.vue'),
+      beforeEnter: checkAuthBeforeEnter,
     },
     {
       path: '/post/:id',
       component: () => import('@/views/PostEditPage.vue'),
+      beforeEnter: checkAuthBeforeEnter,
     },
     {
       path: '*',
