@@ -6,16 +6,46 @@ const authInterceptor = config => {
   return config;
 };
 
-const getClient = () => {
-  return axios.create({
-    baseURL: process.env.VUE_APP_API_URL,
-  });
+const getClient = (baseUrl = '') => {
+  const options = {
+    baseURL: process.env.VUE_APP_API_URL + baseUrl,
+  };
+
+  return axios.create(options);
 };
 
-const httpClient = getClient();
+class ApiClient {
+  constructor(baseUrl) {
+    this.client = getClient(baseUrl);
+  }
 
-// add auth interceptor
-const httpAuthClient = getClient();
-httpAuthClient.interceptors.request.use(authInterceptor);
+  get(url, conf = {}) {
+    return this.client.get(this._getUrl(url), conf);
+  }
 
-export { httpClient, httpAuthClient };
+  put(url, data = {}, conf = {}) {
+    return this.client.put(this._getUrl(url), data, conf);
+  }
+
+  post(url, data = {}, conf = {}) {
+    return this.client.post(this._getUrl(url), data, conf);
+  }
+
+  delete(url, conf = {}) {
+    return this.client.delete(this._getUrl(url), conf);
+  }
+
+  _getUrl(url) {
+    return url && !url.startsWith('/') ? '/' + url : url;
+  }
+}
+
+class ApiAuthClient extends ApiClient {
+  constructor(baseUrl) {
+    super(baseUrl);
+    this.client.interceptors.request.use(authInterceptor);
+  }
+}
+
+export default new ApiClient();
+export { ApiClient, ApiAuthClient };

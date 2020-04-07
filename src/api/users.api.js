@@ -1,4 +1,4 @@
-import { httpClient } from './client';
+import httpClient from './client';
 
 /**
  * 회원가입 API

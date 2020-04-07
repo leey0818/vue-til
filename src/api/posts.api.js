@@ -1,12 +1,12 @@
-import { httpAuthClient } from './client';
+import { ApiAuthClient } from './client';
 
-const END_POINT = '/posts';
+const client = new ApiAuthClient('/posts');
 
 /**
  * 학습노트 데이터 목록 조회 API
  */
 const fetchPosts = () => {
-  return httpAuthClient.get(END_POINT);
+  return client.get();
 };
 
 /**
@@ -14,7 +14,7 @@ const fetchPosts = () => {
  * @param {string} id 학습노트 id
  */
 const fetchPost = id => {
-  return httpAuthClient.get(`${END_POINT}/${id}`);
+  return client.get(id);
 };
 
 /**
@@ -22,7 +22,7 @@ const fetchPost = id => {
  * @param {object} postData 학습노트 데이터
  */
 const createPost = postData => {
-  return httpAuthClient.post(END_POINT, postData);
+  return client.post(null, postData);
 };
 
 /**
@@ -31,7 +31,7 @@ const createPost = postData => {
  * @param {object} postData 학습노트 데이터
  */
 const updatePost = (id, postData) => {
-  return httpAuthClient.put(`${END_POINT}/${id}`, postData);
+  return client.put(id, postData);
 };
 
 /**
@@ -39,7 +39,7 @@ const updatePost = (id, postData) => {
  * @param {string} id 학습노트 id
  */
 const deletePost = id => {
-  return httpAuthClient.delete(`${END_POINT}/${id}`);
+  return client.delete(id);
 };
 
 export { fetchPosts, fetchPost, createPost, updatePost, deletePost };
