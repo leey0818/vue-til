@@ -1,11 +1,11 @@
 <template>
-  <div class="app">
+  <el-container direction="vertical">
     <app-header></app-header>
-    <div class="app-contents">
+    <el-main>
       <router-view></router-view>
-    </div>
+    </el-main>
     <toast-popup></toast-popup>
-  </div>
+  </el-container>
 </template>
 
 <script>
@@ -22,6 +22,22 @@ export default {
 </script>
 
 <style>
-@import './css/reset.css';
-@import './css/common.css';
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #f7f6f9;
+}
+a {
+  text-decoration: none;
+}
+.el-main {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1080px;
+}
+/* @import './css/reset.css'; */
+/* @import './css/common.css'; */
 </style>

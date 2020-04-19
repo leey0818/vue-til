@@ -1,21 +1,31 @@
 <template>
-  <header>
-    <div>
-      <router-link :to="logoLink" class="logo">
-        TIL
-        <span v-if="isLogined">by {{ $store.state.username }}</span>
-      </router-link>
-    </div>
-    <div class="navigations">
-      <template v-if="isLogined">
-        <a class="logout-button" @click.prevent="logoutUser">Logout</a>
-      </template>
-      <template v-else>
-        <router-link to="/login">로그인</router-link>
-        <router-link to="/signup">회원가입</router-link>
-      </template>
-    </div>
-  </header>
+  <el-header height="60px">
+    <el-row type="flex" justify="space-between" align="middle" style="height:100%">
+      <div>
+        <router-link :to="logoLink" class="logo">
+          TIL
+          <span class="sub-logo" v-if="isLogined">by {{ $store.state.username }}</span>
+        </router-link>
+      </div>
+      <div>
+        <template v-if="isLogined">
+          <el-link icon="el-icon-switch-button" :underline="false" @click="logoutUser">
+            Logout
+          </el-link>
+        </template>
+        <template v-else-if="$route.path !== '/signup'">
+          <el-link icon="el-icon-user" :underline="false" @click="$router.push('/signup')">
+            회원가입
+          </el-link>
+        </template>
+        <template v-else>
+          <el-link icon="el-icon-lock" :underline="false" @click="$router.push('/login')">
+            로그인
+          </el-link>
+        </template>
+      </div>
+    </el-row>
+  </el-header>
 </template>
 
 <script>
@@ -42,41 +52,20 @@ export default {
 </script>
 
 <style scoped>
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+.el-header {
   background-color: #927dfc;
-  z-index: 2;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
 }
-a {
-  color: #dedede;
-  font-size: 18px;
+.el-link.el-link--default {
+  color: #f4f4f4;
 }
-a.logo {
+.logo {
   font-size: 30px;
-  font-weight: 900;
+  font-weight: bold;
   color: white;
 }
-.logo > span {
+.logo > .sub-logo {
   font-size: 14px;
   font-weight: normal;
-}
-.navigations a {
-  margin-left: 10px;
-}
-.fixed {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-.logout-button {
-  font-size: 14px;
-}
-a.router-link-exact-active {
-  color: white;
-  font-weight: bold;
 }
 </style>

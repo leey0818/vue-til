@@ -1,6 +1,6 @@
 <template>
   <div class="toast" :class="toastAnimationClass">
-    {{ message }}
+    <span>{{ message }}</span>
   </div>
 </template>
 
@@ -46,22 +46,20 @@ export default {
 <style scoped>
 .toast {
   position: fixed;
-  width: 400px;
-  height: 56px;
-  background-color: #22252e;
-  border-radius: 2px;
-  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
-  color: white;
-  bottom: -120px;
-  margin-left: -200px;
   left: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  bottom: -120px;
+  width: 340px;
+  padding: 15px;
+  margin-left: -170px;
+  background-color: #36343e;
+  border-radius: 2px;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
   transition: transform 750ms ease-out;
 }
 .toast.show {
-  transform: translateY(-150px);
+  transform: translateY(-140px);
   transition: transform 500ms ease-in-out;
 }
 </style>

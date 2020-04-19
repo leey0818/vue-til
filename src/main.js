@@ -2,8 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from '@/routers';
 import store from '@/store';
-import '@fortawesome/fontawesome-free/js/fontawesome';
-import '@fortawesome/fontawesome-free/js/solid';
+import './plugins/element-ui';
 
 Vue.config.productionTip = false;
 

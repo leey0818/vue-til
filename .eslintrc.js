@@ -13,7 +13,8 @@ module.exports = {
 
     'prettier/prettier': ['error', {
       singleQuote: true,
-      trailingComma: 'es5'
+      trailingComma: 'es5',
+      printWidth: 100,
     }],
   },
   overrides: [
