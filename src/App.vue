@@ -21,23 +21,10 @@ export default {
 };
 </script>
 
-<style>
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-body {
-  background-color: #f7f6f9;
-}
-a {
-  text-decoration: none;
-}
+<style scoped>
 .el-main {
   margin: 0 auto;
   width: 100%;
   max-width: 1080px;
 }
-/* @import './css/reset.css'; */
-/* @import './css/common.css'; */
 </style>
