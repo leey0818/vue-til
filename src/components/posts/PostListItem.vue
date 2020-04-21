@@ -1,17 +1,19 @@
 <template>
-  <li>
-    <div class="post-title">
-      {{ item.title }}
+  <el-card :body-style="{ height: '100%', boxSizing: 'border-box' }">
+    <div class="flex-wrap">
+      <div class="title">
+        {{ item.title }}
+      </div>
+      <div class="content">
+        {{ item.contents }}
+      </div>
+      <div class="footer">
+        <span class="text">{{ item.createdAt | datetime }}</span>
+        <i class="icon-btn el-icon-edit-outline" @click="editItem"></i>
+        <i class="icon-btn el-icon-delete" @click="deleteItem"></i>
+      </div>
     </div>
-    <div class="post-contents">
-      {{ item.contents }}
-    </div>
-    <div class="post-time">
-      {{ item.createdAt | datetime }}
-      <span class="icon" @click="editItem"><i class="fa fa-edit"></i></span>
-      <span class="icon" @click="deleteItem"><i class="fa fa-trash"></i></span>
-    </div>
-  </li>
+  </el-card>
 </template>
 
 <script>
@@ -38,4 +40,39 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.el-card {
+  width: 320px;
+  height: 220px;
+  flex-grow: 1;
+  margin: 7px;
+}
+.flex-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.flex-wrap > .title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.flex-wrap > .content {
+  flex-grow: 1;
+}
+.flex-wrap > .footer {
+  position: relative;
+  bottom: -10px;
+  right: -10px;
+  text-align: right;
+  font-size: 14px;
+}
+.footer > .text {
+  color: #616161;
+}
+.footer > .icon-btn {
+  font-size: 1.1em;
+  margin-left: 3px;
+  cursor: pointer;
+}
+</style>
