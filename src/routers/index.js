@@ -17,7 +17,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      redirect: () => (store.getters.isLogined ? '/main' : '/login'),
     },
     {
       path: '/login',
