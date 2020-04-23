@@ -3,6 +3,9 @@ import { removeAuthToken } from '@/utils/auth';
 
 export default {
   // 사용자 이름 설정/삭제
+  [types.SET_NICKNAME](state, nickname) {
+    state.nickname = nickname;
+  },
   [types.SET_USERNAME](state, username) {
     state.username = username;
   },

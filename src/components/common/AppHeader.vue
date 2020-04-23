@@ -4,7 +4,7 @@
       <div>
         <router-link :to="logoLink" class="logo">
           TIL
-          <span class="sub-logo" v-if="isLogined">by {{ $store.state.username }}</span>
+          <span class="sub-logo" v-if="isLogined">by {{ $store.state.nickname }}</span>
         </router-link>
       </div>
       <div>

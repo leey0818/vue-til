@@ -1,5 +1,5 @@
 export default {
-  isLogined({ username }) {
-    return username !== '';
+  isLogined({ username, token }) {
+    return username !== '' && token !== '';
   },
 };

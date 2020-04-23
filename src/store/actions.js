@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_USERNAME } from './mutation-types';
+import { SET_TOKEN, SET_USERNAME, SET_NICKNAME } from './mutation-types';
 import { loginUser } from '@/api/users.api';
 import { setAuthToken } from '@/utils/auth';
 
@@ -9,6 +9,7 @@ export default {
     // state 변경
     commit(SET_TOKEN, data.token);
     commit(SET_USERNAME, data.user.username);
+    commit(SET_NICKNAME, data.user.nickname);
 
     // 인증토큰 저장
     setAuthToken(data.token);
