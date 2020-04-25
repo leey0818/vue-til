@@ -41,9 +41,22 @@ export default {
       try {
         // 삭제
         await deletePost(_id);
+        bus.$emit('show:toast', '삭제되었습니다.');
       } catch (err) {
-        bus.$emit('show:toast', `삭제 오류: ${err.response ? err.response.data : err.message}`);
-        return;
+        const { response } = err;
+
+        if (response) {
+          // 삭제할 수 없음
+          if (response.status === 400) {
+            bus.$emit('show:toast', '게시물을 삭제할 수 없습니다.');
+          }
+          // 이미 삭제된 게시물
+          if (response.status === 404) {
+            bus.$emit('show:toast', '이미 삭제된 게시물 입니다.');
+          }
+        } else {
+          bus.$emit('show:toast', `삭제 중 오류가 발생하였습니다. ${err.message}`);
+        }
       }
 
       // 삭제 후 새로고침

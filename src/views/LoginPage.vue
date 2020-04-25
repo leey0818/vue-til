@@ -13,11 +13,11 @@
         :rules="rules"
         @submit.native.prevent="submitForm"
       >
-        <el-form-item label="User ID" prop="username">
-          <el-input v-model="form.username" :readonly="loading" autofocus></el-input>
+        <el-form-item label="User ID" prop="username" :error="userErrorMessage">
+          <el-input v-model="form.username" :readonly="loading" ref="uid" autofocus></el-input>
         </el-form-item>
-        <el-form-item label="Password" prop="password" :error="errorMessage">
-          <el-input v-model="form.password" :readonly="loading" ref="pass" show-password></el-input>
+        <el-form-item label="Password" prop="password" :error="passErrorMessage">
+          <el-input v-model="form.password" :readonly="loading" ref="pwd" show-password></el-input>
         </el-form-item>
         <el-button type="primary" native-type="submit" :loading="loading">로그인</el-button>
       </el-form>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import bus from '@/utils/bus';
+
 export default {
   name: 'LoginPage',
   data() {
@@ -42,7 +44,8 @@ export default {
         username: [{ required: true, trigger: 'blur', message: '로그인 ID를 입력하세요.' }],
         password: [{ required: true, trigger: 'blur', message: '패스워드를 입력하세요.' }],
       },
-      errorMessage: '',
+      userErrorMessage: '',
+      passErrorMessage: '',
     };
   },
   methods: {
@@ -51,7 +54,8 @@ export default {
       if (!isValid) return;
 
       this.loading = true;
-      this.errorMessage = '';
+      this.userErrorMessage = '';
+      this.passErrorMessage = '';
 
       const userData = {
         username: this.form.username,
@@ -61,9 +65,20 @@ export default {
       try {
         await this.$store.dispatch('loginUser', userData);
         this.$router.push('/main');
-      } catch (error) {
-        this.errorMessage = error.response ? error.response.data : error.message;
-        this.$refs.pass.focus();
+      } catch ({ message, response }) {
+        // 인증 실패
+        if (response && response.status === 401) {
+          if (response.data.indexOf('User not found') !== -1) {
+            this.userErrorMessage = '존재하지 않는 사용자 입니다.';
+            this.$refs.uid.focus();
+          } else {
+            this.passErrorMessage = '비밀번호가 일치하지 않습니다.';
+            this.$refs.pwd.focus();
+          }
+        } else {
+          // 기타 오류
+          bus.$emit('show:toast', `오류가 발생하였습니다. ${message}`);
+        }
       } finally {
         this.loading = false;
       }

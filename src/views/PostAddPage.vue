@@ -45,8 +45,14 @@ export default {
         // 메인페이지로 이동
         bus.$emit('show:toast', '게시물이 등록되었습니다.');
         this.$router.push('/main');
-      } catch (error) {
-        bus.$emit('show:toast', `게시물을 등록할 수 없습니다. ${error.response.data.message}`);
+      } catch (err) {
+        // 게시물 중복
+        if (err.response && err.response.status === 400) {
+          bus.$emit(
+            'show:toast',
+            '동일한 제목으로 등록된 게시물이 있습니다. 다른 제목을 입력하세요.'
+          );
+        }
       } finally {
         this.loading = false;
       }
