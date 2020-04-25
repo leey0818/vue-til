@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { CLEAR_TOKEN, CLEAR_USERNAME } from '@/store/mutation-types';
+import { LOGOUT } from '@/store/mutation-types';
 
 export default {
   computed: {
@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.commit(CLEAR_TOKEN);
-      this.$store.commit(CLEAR_USERNAME);
+      this.$store.commit(LOGOUT);
       this.$router.push('/');
     },
   },
