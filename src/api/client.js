@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '@/store';
-import router from '@/routers';
+import router from '@/router';
 import bus from '@/utils/bus';
 import { LOGOUT } from '@/store/mutation-types';
 
